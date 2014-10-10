@@ -1,0 +1,39 @@
+{
+  "name": "glsl-frobenius",
+  "version": "1.0.0",
+  "description": "Computes the Frobenius norm of a matrix in glsl",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "a-big-triangle": "^1.0.0",
+    "glslify": "^1.6.0"
+  },
+  "scripts": {
+    "test": "beefy --open example/example.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/stackgl/glsl-frobenius.git"
+  },
+  "keywords": [
+    "frobenius",
+    "norm",
+    "matrix",
+    "squares",
+    "glsl",
+    "glslify"
+  ],
+  "author": "Mikola Lysenko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stackgl/glsl-frobenius/issues"
+  },
+  "browserify": {
+    "transform": "glslify"
+  },
+  "homepage": "https://github.com/stackgl/glsl-frobenius"
+}

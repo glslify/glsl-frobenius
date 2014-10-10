@@ -1,6 +1,6 @@
 var glslify       = require('glslify')
 var drawTriangle  = require('a-big-triangle')
-=
+
 var canvas = document.createElement('canvas')
 var gl = canvas.getContext('webgl')
 
@@ -11,15 +11,17 @@ void main() {\
   gl_Position = vec4(position,0.0,1.0);\
 }',
   frag: '\
-#pragma glslify : frob = require(../frob.glsl)\n\
+precision mediump float;\n\
+#pragma glslify: frob = require(../index.glsl)\n\
 uniform float m0;\
 uniform mat2  m1;\
 uniform mat3  m2;\
 uniform mat4  m3;\
 uniform float e0, e1, e2, e3;\
 void main() {\
-  gl_FragColor = vec4(frob(m0)-e0, frob(m1)-e1, frob(m2)-e2, frob(m3)-e3);\
-}'
+  gl_FragColor = 100.0*vec4(frob(m0)-e0, frob(m1)-e1, frob(m2)-e2, frob(m3)-e3);\
+}',
+  inline: true
 })(gl)
 
 
@@ -34,7 +36,7 @@ function runTest(m0, m1, m2, m3) {
 
   shader.bind()
   shader.uniforms = {
-    e0: Math.abs(e0),
+    e0: Math.abs(m0),
     e1: f(m1),
     e2: f(m2),
     e3: f(m3),
@@ -48,7 +50,14 @@ function runTest(m0, m1, m2, m3) {
   var result = new Uint8Array(4)
   gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, result)
 
-  console.log(result[0], result[1], result[2], result[3])
+  if(result[0] > 0 ||
+     result[1] > 0 ||
+     result[2] > 0 ||
+     result[3] > 0) {
+    console.log('fail', result[0], result[1], result[2], result[3])
+  } else {
+    console.log('ok')
+  }
 }
 
 
